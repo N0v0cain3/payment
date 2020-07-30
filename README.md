@@ -1,1 +1,1 @@
-# node-stripe
+# simple payment portal , stripe
