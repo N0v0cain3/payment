@@ -1,1 +1,1 @@
-# simple payment portal , stripe
+# simple payment portal Razorpay
