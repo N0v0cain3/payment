@@ -16,21 +16,18 @@ let base64 = require('base-64');
 
 let url = 'https://api.razorpay.com/v1/plans';
 
-// let headers = new Headers();
 
-//headers.append('Content-Type', 'text/json');
-// let headers = {}
 fetch(url, {
     method: 'GET',
     headers: {
         "Content-Type": "application/json",
         'Authorization': 'Basic ' + base64.encode(process.env.KEY_ID + ":" + process.env.KEY_SECRET)
     },
-    //credentials: 'user:passwd'
+
 })
     .then(response => response.json())
     .then(json => console.log(json.items[0].item));
-//.done();
+
 
 app.post("/subs", (req, res) => {
     let url = "https://api.razorpay.com/v1/subscriptions"
@@ -65,7 +62,7 @@ app.post("/subs", (req, res) => {
     })
         .then(response => response.json())
         .then(json =>
-            //  console.log(json)
+
             res.status(200).json({
                 json
             })
