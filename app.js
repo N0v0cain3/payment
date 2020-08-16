@@ -95,6 +95,41 @@ app.get("/subs/:id", (req, res) => {
 
 })
 
+app.patch("/subs", (req, res) => {
+    let url = `https://api.razorpay.com/v1/subscriptions/sub_FRQuthyDbjXTwi`
+
+    data = {
+
+        "plan_id": "plan_FLa9MYOKGAEOMk",
+        "quantity": 3,
+        "remaining_count": 6,
+        "schedule_change_at": "now",
+        "customer_notify": 1
+
+
+    }
+
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Basic ' + base64.encode(process.env.KEY_ID + ":" + process.env.KEY_SECRET)
+        },
+        body: JSON.stringify(data),
+
+
+
+    })
+        .then(response => response.json())
+        .then(json =>
+
+            res.status(200).json({
+                json
+            })
+        );
+
+})
+
 function parseJSON(response) {
     return response.json()
 }
