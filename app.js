@@ -68,6 +68,33 @@ app.post("/subs", (req, res) => {
             })
         );
 })
+
+
+app.get("/subs/:id", (req, res) => {
+    let url = `https://api.razorpay.com/v1/subscriptions/sub_FRQuthyDbjXTwi`;
+
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Basic ' + base64.encode(process.env.KEY_ID + ":" + process.env.KEY_SECRET)
+        },
+
+
+
+    })
+        .then(response => response.json())
+        .then((json) => {
+            console.log("charge at : ", json.charge_at)
+            res.status(200).json({
+                json
+            })
+        }
+        );
+
+})
+
 function parseJSON(response) {
     return response.json()
 }
