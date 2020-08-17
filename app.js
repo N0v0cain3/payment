@@ -28,6 +28,26 @@ fetch(url, {
     .then(response => response.json())
     .then(json => console.log(json.items[0].item));
 
+//Fetch all the plans
+
+app.get("/plans", (req, res) => {
+    let url = "https://api.razorpay.com/v1/plans";
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Basic ' + base64.encode(process.env.KEY_ID + ":" + process.env.KEY_SECRET)
+        },
+
+    })
+        .then(response => response.json())
+        .then(json => res.status(200).json({
+            json
+        }));
+
+})
+
+//Create Subs
 
 app.post("/subs", (req, res) => {
     let url = "https://api.razorpay.com/v1/subscriptions"
@@ -38,15 +58,15 @@ app.post("/subs", (req, res) => {
         // "start_at": 1735689600,
         // "expire_by": 1893456000,
         "customer_notify": 1,
-        "addons": [
-            {
-                "item": {
-                    "name": "Delivery charges",
-                    "amount": 30000,
-                    "currency": "INR"
-                }
-            }
-        ],
+        // "addons": [
+        //     {
+        //         "item": {
+        //             "name": "Delivery charges",
+        //             "amount": 30000,
+        //             "currency": "INR"
+        //         }
+        //     }
+        // ],
     }
 
     fetch(url, {
@@ -100,8 +120,8 @@ app.patch("/subs", (req, res) => {
 
     data = {
 
-        "plan_id": "plan_FLa9MYOKGAEOMk",
-        "quantity": 3,
+        "plan_id": "plan_FRVNgm8HVMHAiS",
+        "quantity": 1,
         "remaining_count": 6,
         "schedule_change_at": "now",
         "customer_notify": 1
