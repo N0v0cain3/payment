@@ -54,12 +54,15 @@ app.get("/plans", (req, res) => {
 
 app.post("/subs", (req, res) => {
     let url = "https://api.razorpay.com/v1/subscriptions"
+    let start_at = Date.now() + 15 * 60 * 60 * 24 * 1000
+    // let expire_by = Date.now() + 15 * 60 * 60 * 24 * 1000
+    //"plan_FN3TpeFOgUkhyP"
     data = {
-        "plan_id": "plan_FN3TpeFOgUkhyP",
-        "total_count": 6,
+        "plan_id": `${req.body.plan_id}`,
+        "total_count": `${req.body.total_count}`,
         "quantity": 1,
-        // "start_at": 1735689600,
-        // "expire_by": 1893456000,
+        // "start_at": start_at,
+        // "expire_by": expire_by,
         "customer_notify": 1,
         // "addons": [
         //     {
@@ -84,18 +87,21 @@ app.post("/subs", (req, res) => {
 
     })
         .then(response => response.json())
-        .then(json =>
+        .then((json) => {
 
             res.status(200).json({
                 json
             })
+
+        }
         );
 })
 
 
 
 app.get("/subs/:id", (req, res) => {
-    let url = `https://api.razorpay.com/v1/subscriptions/sub_FRQuthyDbjXTwi`;
+    //sub_FRQuthyDbjXTwi
+    let url = `https://api.razorpay.com/v1/subscriptions/${req.params.id}`;
 
 
     fetch(url, {
