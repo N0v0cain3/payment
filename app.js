@@ -99,6 +99,7 @@ app.post("/subs", (req, res) => {
 
 
 
+
 app.get("/subs/:id", (req, res) => {
     //sub_FRQuthyDbjXTwi
     let url = `https://api.razorpay.com/v1/subscriptions/${req.params.id}`;
@@ -281,6 +282,41 @@ app.post("/subs/cancel", (req, res) => {
         );
 })
 
+
+// Invoices
+
+app.get("/invoice/:id", (req, res) => {
+
+    let url = `https://api.razorpay.com/v1/invoices?subscription_id=${req.params.id}`
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Basic ' + base64.encode(process.env.KEY_ID + ":" + process.env.KEY_SECRET)
+        }
+
+
+
+    })
+        .then(response => response.json())
+        .then((json) => {
+            let array = []
+            for (i = 0; i < json.items.length; i++) {
+                array.push(json.items[i].short_url)
+            }
+            res.status(200).json({
+                array
+            })
+        }
+        ).catch((err) => {
+            res.status(500).json({
+                error: err.toString()
+            })
+        })
+
+
+})
 
 
 function parseJSON(response) {
