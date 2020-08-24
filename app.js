@@ -31,6 +31,28 @@ fetch(url, {
     .then(response => response.json())
     .then(json => console.log(json.items[0].item));
 
+//webhooks 
+router.post("/verify", (req, res) => {
+    const secret = process.env.RAZORPAY_SECRET;
+
+    console.log(req.body);
+
+    const shasum = crypto.createHmac("sha256", secret);
+    shasum.update(JSON.stringify(req.body));
+    const digest = shasum.digest("hex");
+
+    console.log(digest, req.headers["x-razorpay-signature"]);
+
+    if (digest === req.headers["x-razorpay-signature"]) {
+        console.log("request is legit");
+        res.status(200).json({
+            message: "OK",
+        });
+    } else {
+        res.status(403).json({ message: "Invalid" });
+    }
+});
+
 //Fetch all the plans
 
 app.get("/plans", (req, res) => {
